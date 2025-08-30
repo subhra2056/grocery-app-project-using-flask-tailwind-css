@@ -1,0 +1,118 @@
+{% extends 'base.html' %}
+
+{% block title %} Home {% endblock %}
+
+
+{% block body %}
+
+<section class="relative text-white bg-cover bg-center bg-no-repeat h-[700px]"
+    style="background-image: url('../static/images/homepage-background.jpg');">
+    <div class="absolute inset-0 z-0"></div>
+    <div
+        class="relative z-10 max-w-7xl mx-auto px-6 lg:px-12 text-center flex flex-col items-center justify-center h-full">
+        <h1 class="text-4xl md:text-6xl font-bold text-gray-600">Fresh Groceries, Delivered to You</h1>
+        <p class="mt-4 text-lg md:text-xl text-gray-700">Shop fresh-fruits, electronics, home-decorations, etc at
+            GreenKart.</p>
+        <div class="mt-6 flex justify-center space-x-4">
+            <a href="/shop"
+                class="bg-white text-green-700 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 shadow-md">
+                Shop Now
+            </a>
+            <a href="/offers" class="bg-green-500 px-6 py-3 rounded-lg font-semibold hover:bg-green-600 shadow-md">
+                View Offers
+            </a>
+        </div>
+    </div>
+</section>
+
+
+<!-- Categories Section -->
+<section class="max-w-7xl mx-auto px-6 lg:px-12 py-16">
+    <h2 class="text-4xl font-bold text-gray-800 mb-8 text-center">Shop by Category</h2>
+
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+        <div class="bg-white rounded-xl shadow hover:shadow-lg p-6 text-center">
+            <img src="../static/images/categories-1.jpg" alt="Personal Care"
+                class="h-39 mx-auto mb-4 rounded-lg object-cover">
+            <h3 class="font-semibold text-gray-700">Personal Care</h3>
+        </div>
+        <div class="bg-white rounded-xl shadow hover:shadow-lg p-6 text-center">
+            <img src="../static/images/categories-2.jpg" alt="Fruits & Vegetables"
+                class="h-39 mx-auto mb-4 rounded-lg object-cover">
+            <h3 class="font-semibold text-gray-700">Fruits & Vegetables</h3>
+        </div>
+        <div class="bg-white rounded-xl shadow hover:shadow-lg p-6 text-center">
+            <img src="../static/images/categories-3.jpg" alt="Electronics"
+                class="h-39 mx-auto mb-4 rounded-lg object-cover">
+            <h3 class="font-semibold text-gray-700">Electronics</h3>
+        </div>
+        <div class="bg-white rounded-xl shadow hover:shadow-lg p-6 text-center">
+            <img src="../static/images/categories-4.jpg" alt="Snacks" class="h-39 mx-auto mb-4 rounded-lg object-cover">
+            <h3 class="font-semibold text-gray-700">Snacks</h3>
+        </div>
+        <div class="bg-white rounded-xl shadow hover:shadow-lg p-6 text-center">
+            <img src="../static/images/categories-5.jpg" alt="Beverages"
+                class="h-39 mx-auto mb-4 rounded-lg object-cover">
+            <h3 class="font-semibold text-gray-700">Beverages</h3>
+        </div>
+        <div class="bg-white rounded-xl shadow hover:shadow-lg p-6 text-center">
+            <img src="../static/images/categories-6.jpg" alt="Dairy & Eggs"
+                class="h-39 mx-auto mb-4 rounded-lg object-cover">
+            <h3 class="font-semibold text-gray-700">Dairy & Eggs</h3>
+        </div>
+        <!-- Browse Categories Button -->
+
+        <div class="flex justify-center col-span-2 py-16">
+            <a href="#"
+                class="inline-flex items-center text-gray-800 bg-white border border-gray-300 font-semibold px-6 py-3 rounded-xl shadow hover:shadow-lg hover:bg-gray-100 transition-all duration-300">
+                Browse all categories
+                <svg xmlns="http://www.w3.org/2000/svg"
+                    class="h-5 w-5 ml-2 text-gray-500 transition-transform duration-300 group-hover:translate-x-1"
+                    fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                </svg>
+            </a>
+        </div>
+
+    </div>
+
+    </div>
+</section>
+
+<!--  Featured Products Section -->
+<section class="bg-gray-100 py-16">
+    <div class="max-w-7xl mx-auto px-6 lg:px-12">
+        <h2 class="text-2xl font-bold text-gray-800 mb-8 text-center">Best Sellers</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="bg-white rounded-xl shadow hover:shadow-lg overflow-hidden">
+                <img src="../static/images/apple.jpg" alt="Apple" class="w-full h-48 object-cover">
+                <div class="p-6">
+                    <h3 class="text-lg font-semibold">Fresh Apples</h3>
+                    <p class="text-gray-600">₹120/kg</p>
+                    <button class="mt-4 w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700">Add to
+                        Cart</button>
+                </div>
+            </div>
+            <div class="bg-white rounded-xl shadow hover:shadow-lg overflow-hidden">
+                <img src="../static/images/milk.jpg" alt="Milk" class="w-full h-48 object-cover">
+                <div class="p-6">
+                    <h3 class="text-lg font-semibold">Organic Milk</h3>
+                    <p class="text-gray-600">₹50/litre</p>
+                    <button class="mt-4 w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700">Add to
+                        Cart</button>
+                </div>
+            </div>
+            <div class="bg-white rounded-xl shadow hover:shadow-lg overflow-hidden">
+                <img src="../static/images/rice.jpg" alt="Rice" class="w-full h-48 object-cover">
+                <div class="p-6">
+                    <h3 class="text-lg font-semibold">Basmati Rice</h3>
+                    <p class="text-gray-600">₹80/kg</p>
+                    <button class="mt-4 w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700">Add to
+                        Cart</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
