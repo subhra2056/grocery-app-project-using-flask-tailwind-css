@@ -1,7 +1,7 @@
 from . import db
 from flask import Blueprint, render_template, redirect, url_for, flash
-from flask_login import login_user, login_required, logout_user
-from .forms import sign_up_form, login_form
+from flask_login import login_user, login_required, logout_user, current_user
+from .forms import sign_up_form, login_form, passwordchangeform
 from .models import customer
 
 auth = Blueprint('auth', __name__)
@@ -74,3 +74,34 @@ def logout():
     flash("Logged out successfully!", "success")
     return redirect(url_for('views.login'))
 
+
+@auth.route('/profile')
+@login_required
+def profile():
+    return render_template('profile.html', customer = current_user)
+
+
+@auth.route('/Changepassword', methods=['GET', 'POST'])
+@login_required
+def changepassword():
+    form = passwordchangeform()
+
+    if form.validate_on_submit():
+
+        if not current_user.verify_password(form.current_password.data):
+            flash("Please enter the correct password", "error")
+
+        elif current_user.verify_password(form.new_password.data):
+            flash("New password should not match the old password", "error")
+
+        elif form.new_password.data != form.confirm_new_password.data:
+            flash("new password doesn't matches", "error")
+
+        else:
+            current_user.password = form.new_password.data
+            db.session.commit()
+            flash("Password changed successfully!" "success")
+            return redirect(url_for('auth.profile'))
+
+
+    return render_template('changepassword.html', form=form)
