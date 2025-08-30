@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block title %} No Shop Items {% endblock %}
+
+
+
+{% block body %}
+
+<div class="flex flex-col items-center justify-center min-h-[70vh] text-center px-6">
+
+  <!-- Empty Illustration -->
+  <img src="https://cdn-icons-png.flaticon.com/512/4076/4076549.png"
+       alt="Empty Shop"
+       class="w-40 h-40 md:w-56 md:h-56 mb-6 opacity-90 drop-shadow-md">
+
+  <!-- Heading -->
+  <h1 class="text-3xl md:text-4xl font-bold text-gray-800 mb-3">
+    Our Shelves Are Empty
+  </h1>
+
+  <!-- Subtitle -->
+  <p class="text-gray-600 text-lg md:text-xl max-w-xl mb-8">
+    Sorry, we don’t have any products to show right now.  
+    But don’t worry — new items will be stocked soon!
+  </p>
+
+  <!-- Call-to-Action Buttons -->
+  <div class="flex flex-wrap justify-center gap-4">
+    <a href="{{ url_for('home') }}"
+       class="px-6 py-3 rounded-full bg-green-600 hover:bg-green-700 text-white font-medium shadow-lg transition">
+       🏠 Back to Home
+    </a>
+    <a href="{{ url_for('offers') }}"
+       class="px-6 py-3 rounded-full bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium shadow-md transition">
+       🎁 View Offers
+    </a>
+  </div>
+
+  <!-- Decorative Divider -->
+  <div class="mt-12 w-32 border-t-4 border-green-600 rounded-full"></div>
+
+</div>
+
+{% endblock %}

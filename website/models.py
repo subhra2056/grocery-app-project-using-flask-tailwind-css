@@ -70,19 +70,3 @@ class order(db.Model):
         return f'<order {self.id}>'
 
 
-# class category(db.Model):
-#     id = db.Column(db.Integer, primary_key=True)
-#     name = db.Column(db.String(100), unique=True, nullable=False)
-#     description = db.Column(db.String(500))
-
-#     products = db.relationship('product', backref='category', lazy=True)
-
-# class wishlist(db.Model):
-#     id = db.Column(db.Integer, primary_key=True)
-#     wishlist_customer_id = db.Column(db.Integer, db.ForeignKey('customer.id'), nullable=False)
-#     wishlist_product_id = db.Column(db.Integer, db.ForeignKey('product.id'), nullable=False)
-#     added_at = db.Column(db.DateTime, default=datetime.utcnow)
-
-#     __table_args__ = (
-#     db.UniqueConstraint('customer_id', 'product_id', name='unique_wishlist_item'),
-# )

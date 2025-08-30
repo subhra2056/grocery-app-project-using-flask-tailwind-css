@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block title %} Shop Items {% endblock %}
+
+{% block body %}
+<div class="max-w-7xl mx-auto px-6 py-8">
+    <!--diplay empty shop page if there is no shop item-->
+    {% if items | length < 1 %} {% include "emptyshop.html" %} {% else %}
+    <!--will display list of products added-->
+     <h2 class="text-2xl font-semibold text-gray-800 mb-6">Shop Items</h2>
+
+        <div class="overflow-x-auto bg-white shadow-md rounded-lg">
+            <table class="min-w-full table-auto border-collapse">
+                <thead class="bg-green-700 text-white">
+                    <tr>
+                        <th class="px-6 py-3 text-left text-sm font-medium uppercase tracking-wider">ID</th>
+                        <th class="px-6 py-3 text-left text-sm font-medium uppercase tracking-wider">Date Added</th>
+                        <th class="px-6 py-3 text-left text-sm font-medium uppercase tracking-wider">Product Name</th>
+                        <th class="px-6 py-3 text-left text-sm font-medium uppercase tracking-wider">Price</th>
+                        <th class="px-6 py-3 text-left text-sm font-medium uppercase tracking-wider">In Stock</th>
+                        <th class="px-6 py-3 text-left text-sm font-medium uppercase tracking-wider">Picture</th>
+                        <th class="px-6 py-3 text-left text-sm font-medium uppercase tracking-wider">Best Seller</th>
+                        <th class="px-6 py-3 text-left text-sm font-medium uppercase tracking-wider">Action</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-200">
+                    {% for item in items %}
+                    <tr class="hover:bg-gray-50 transition">
+                        <td class="px-6 py-4 text-sm text-gray-700">{{ item.id }}</td>
+                        <td class="px-6 py-4 text-sm text-gray-700">
+                            {{ item.date_added.strftime('%Y-%m-%d') if item.date_added else '-' }}
+                        </td>
+                        <td class="px-6 py-4 text-sm font-medium text-gray-900">{{ item.product_name }}</td>
+                        <td class="px-6 py-4 text-sm text-gray-700">₹{{ item.product_price }}</td>
+                        <td class="px-6 py-4 text-sm">
+                            <!--Total stock-->
+                            {{ item.product_in_stock }}
+                        </td>
+                        <td class="px-6 py-4 text-sm">
+                            <img src="{{ item.product_picture }}" alt="No image"
+                                class="h-12 w-12 rounded-md object-cover">
+                        </td>
+                        <td class="px-6 py-4 text-sm">
+                            {{ item.best_sellers }}
+                        </td>
+                        <td class="px-6 py-4 text-sm space-y-2">
+                            <a href="#"
+                                class="inline-block px-3 py-1 bg-green-600 text-white text-xs font-medium rounded-md shadow hover:bg-blue-700 transition">
+                                Update
+                            </a>
+                            <br>
+                            <a href="#"
+                                class="inline-block px-3 py-1 bg-red-600 text-white text-xs font-medium rounded-md shadow hover:bg-red-700 transition">
+                                Remove
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% endif %}
+</div>
+{% endblock %}

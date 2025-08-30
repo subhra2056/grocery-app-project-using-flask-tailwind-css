@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, flash
+from flask import Blueprint, render_template, flash, send_from_directory
 from flask_login import login_required, current_user
 from .forms import shop_item_form
 from werkzeug.utils import secure_filename
@@ -44,5 +44,20 @@ def add_shop_items():
                 flash('Item not added')
 
         return render_template('Add-Products.html', form=form)
+
+    return render_template('404.html')
+
+
+@admin.route('/media/<path:filename>')
+def get_image(filename):
+    return send_from_directory('../media', filename)
+
+
+@admin.route('/Shop-Items', methods=['GET', 'POST'])
+@login_required
+def shop_items():
+    if current_user.id == 1:
+        items = product.query.order_by(product.date_added).all()
+        return render_template('shopitems.html', items=items)
 
     return render_template('404.html')
