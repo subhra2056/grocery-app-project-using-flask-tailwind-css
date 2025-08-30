@@ -6,29 +6,28 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 class customer(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
-    email = db.Column(db.String(100), unique=True)
-    full_name = db.Column(db.String(50), nullable=False)
-    password_hash = db.Column(db.String(150))
+    email = db.Column(db.String(100), unique=True, nullable=False)
+    full_name = db.Column(db.String(50), nullable=False)  # fixed
+    password_hash = db.Column(db.String(150), nullable=False)
     account_creation_date = db.Column(db.DateTime(), default=datetime.utcnow)
-    is_admin = db.Column(db.Boolean, default=False)
 
-    cart_items = db.relationship('cart', backref=db.backref('customer', lazy = True))
-    orders = db.relationship('order', backref=db.backref('customer', lazy = True))
+    cart_items = db.relationship('cart', backref=db.backref('customer', lazy=True))
+    orders = db.relationship('order', backref=db.backref('customer', lazy=True))
 
     @property
     def password(self):
-        raise AttributeError('Password is not a readable Attribute')
-    
+        raise AttributeError('Password is not readable')
+
     @password.setter
     def password(self, password):
-        self.password_hash = generate_password_hash(password=password)
+        self.password_hash = generate_password_hash(password)
 
     def verify_password(self, password):
-        return check_password_hash(self.password_hash, password=password)
-    
+        return check_password_hash(self.password_hash, password)
+
     def __str__(self):
-        return '<customer %r>' % customer.id
-    
+        return f'<customer {self.id}>'
+
 
 class product(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -40,23 +39,22 @@ class product(db.Model):
     Best_Sellers = db.Column(db.Boolean, default=False)
     Date_added = db.Column(db.DateTime, default=datetime.utcnow)
 
-    carts = db.relationship('cart', backref=db.backref('product', lazy = True))
-    orders = db.relationship('order', backref=db.backref('product', lazy = True))
-
+    carts = db.relationship('cart', backref=db.backref('product', lazy=True))
+    orders = db.relationship('order', backref=db.backref('product', lazy=True))
 
     def __str__(self):
-        return '<product %r>' % self.product_name
-    
+        return f'<product {self.product_name}>'
+
 
 class cart(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    quantity = db.Column(db.Integer, nullable = False)
+    quantity = db.Column(db.Integer, nullable=False)
 
     customer_table_link = db.Column(db.Integer, db.ForeignKey('customer.id'), nullable=False)
-    product_table_link = db.Column(db.Integer,db.ForeignKey('product.id'), nullable=False)
+    product_table_link = db.Column(db.Integer, db.ForeignKey('product.id'), nullable=False)
 
     def __str__(self):
-        return '<cart %r>' %self.id
+        return f'<cart {self.id}>'
 
 
 class order(db.Model):
@@ -69,9 +67,9 @@ class order(db.Model):
     customer_table_link = db.Column(db.Integer, db.ForeignKey('customer.id'), nullable=False)
     product_table_link = db.Column(db.Integer, db.ForeignKey('product.id'), nullable=False)
 
-
     def __str__(self):
-        return '<order %r>' %self.id
+        return f'<order {self.id}>'
+
 
 # class category(db.Model):
 #     id = db.Column(db.Integer, primary_key=True)
