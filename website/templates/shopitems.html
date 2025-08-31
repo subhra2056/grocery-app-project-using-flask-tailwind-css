@@ -18,6 +18,7 @@
                     <th class="px-6 py-3 text-left text-sm font-medium uppercase tracking-wider">Product Name</th>
                     <th class="px-6 py-3 text-left text-sm font-medium uppercase tracking-wider">Price</th>
                     <th class="px-6 py-3 text-left text-sm font-medium uppercase tracking-wider">In Stock</th>
+                    <th class="px-6 py-3 text-left text-sm font-medium uppercase tracking-wider">category</th>
                     <th class="px-6 py-3 text-left text-sm font-medium uppercase tracking-wider">Picture</th>
                     <th class="px-6 py-3 text-left text-sm font-medium uppercase tracking-wider">Top picks</th>
                     <th class="px-6 py-3 text-left text-sm font-medium uppercase tracking-wider">Action</th>
@@ -35,6 +36,10 @@
                     <td class="px-6 py-4 text-sm">
                         <!--Total stock-->
                         {{ item.product_in_stock }}
+                    </td>
+                    <td class="px-6 py-4 text-sm">
+                        <!--categories-->
+                       
                     </td>
                     <td class="px-6 py-4 text-sm">
                         <img src="{{ item.product_picture }}" alt="No image" class="h-12 w-12 rounded-md object-cover">

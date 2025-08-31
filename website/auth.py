@@ -58,7 +58,10 @@ def login():
             if user.verify_password(password):
                 login_user(user)
                 flash("Logged in successfully!", "success")
-                return redirect(url_for('views.home'))
+                if current_user.id == 1:
+                    return render_template('admindashboard.html')
+                else:
+                    return redirect(url_for('views.home'))
             else:
                 flash("Incorrect password!", "error")
         else:
@@ -105,3 +108,8 @@ def changepassword():
 
 
     return render_template('changepassword.html', form=form)
+
+#display all the categories without logging in
+@auth.route('/allcategories')
+def allcategories():
+    return render_template('allcategories.html')

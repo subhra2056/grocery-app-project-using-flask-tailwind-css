@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block title %} Admin Dashboard {% endblock %}
+
+{% block body %}
+<div class="bg-gradient-to-br from-green-50 to-white min-h-[80vh]">
+  <div class="max-w-7xl mx-auto px-6 py-12">
+
+    <!-- Page Heading -->
+    <div class="text-center mb-12">
+      <h1 class="text-4xl font-extrabold text-green-700">Admin Dashboard</h1>
+      <p class="text-gray-600 mt-2">Manage everything from one place</p>
+    </div>
+
+    <!-- Dashboard Grid -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+
+      <!-- View Shop Items -->
+      <a href="/Shopitems"
+         class="bg-white shadow-lg rounded-2xl p-8 border border-gray-100 hover:shadow-2xl transform hover:-translate-y-1 hover:scale-[1.02] transition duration-300">
+        <div class="flex items-center space-x-5">
+          <div class="p-5 rounded-full bg-green-100 text-green-600 text-2xl">
+            🛍️
+          </div>
+          <div>
+            <h2 class="text-2xl font-semibold text-gray-800">Shop Items</h2>
+            <p class="text-gray-500 text-sm mt-1">Add, edit or remove products</p>
+          </div>
+        </div>
+      </a>
+
+      <!-- Orders -->
+      <a href="#"
+         class="bg-white shadow-lg rounded-2xl p-8 border border-gray-100 hover:shadow-2xl transform hover:-translate-y-1 hover:scale-[1.02] transition duration-300">
+        <div class="flex items-center space-x-5">
+          <div class="p-5 rounded-full bg-yellow-100 text-yellow-600 text-2xl">
+            📦
+          </div>
+          <div>
+            <h2 class="text-2xl font-semibold text-gray-800">Orders</h2>
+            <p class="text-gray-500 text-sm mt-1">Track and manage customer orders</p>
+          </div>
+        </div>
+      </a>
+
+      <!-- Homepage -->
+      <a href="{{ url_for('views.home') }}"
+         class="bg-white shadow-lg rounded-2xl p-8 border border-gray-100 hover:shadow-2xl transform hover:-translate-y-1 hover:scale-[1.02] transition duration-300">
+        <div class="flex items-center space-x-5">
+          <div class="p-5 rounded-full bg-purple-100 text-purple-600 text-2xl">
+            🏠
+          </div>
+          <div>
+            <h2 class="text-2xl font-semibold text-gray-800">Homepage</h2>
+            <p class="text-gray-500 text-sm mt-1">Go back to customer site</p>
+          </div>
+        </div>
+      </a>
+
+    </div>
+  </div>
+</div>
+{% endblock %}
