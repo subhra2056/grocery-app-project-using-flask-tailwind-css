@@ -31,11 +31,11 @@ class customer(db.Model, UserMixin):
 
 class product(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    product_name = db.Column(db.String(100), nullable=False)
+    product_name = db.Column(db.String(100),unique=True, nullable=False)
     product_price = db.Column(db.Float, nullable=False)
     product_in_stock = db.Column(db.Integer, nullable=False)
-    product_picture = db.Column(db.String(1000), nullable=False)
-    best_sellers = db.Column(db.String(10), default=False)
+    product_picture = db.Column(db.String(1000),unique=True, nullable=False)
+    top_picks = db.Column(db.String(10), default=False)
     date_added = db.Column(db.DateTime, default=datetime.utcnow)
 
     carts = db.relationship('cart', backref=db.backref('product', lazy=True))

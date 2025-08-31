@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, flash, send_from_directory
+from flask import Blueprint, render_template, flash, send_from_directory, redirect
 from flask_login import login_required, current_user
 from .forms import shop_item_form
 from werkzeug.utils import secure_filename
@@ -8,7 +8,7 @@ from . import db
 admin = Blueprint('admin', __name__)
 
 
-@admin.route('/Add-Products', methods=['GET', 'POST'])
+@admin.route('/Addproducts', methods=['GET', 'POST'])
 @login_required
 def add_shop_items():
     if current_user.id == 1:
@@ -18,7 +18,7 @@ def add_shop_items():
             product_price = form.product_price.data
             product_in_stock = form.product_in_stock.data
             product_picture = form.product_picture.data
-            best_sellers = form.best_sellers.data
+            top_picks = form.top_picks.data
 
             file_name = secure_filename(product_picture.filename) 
 
@@ -31,19 +31,19 @@ def add_shop_items():
             new_product.product_price = product_price
             new_product.product_in_stock = product_in_stock
             new_product.product_picture = file_path
-            new_product.best_sellers = best_sellers
+            new_product.top_picks = top_picks
 
             try:
                 db.session.add(new_product)
                 db.session.commit()
                 flash(f'{product_name} added to store successfully!')
                 print('Item has been added')
-                return render_template('Add-Products.html', form = form)
+                return render_template('AddProducts.html', form = form)
             except Exception as e:
                 print(e)
                 flash('Item not added')
 
-        return render_template('Add-Products.html', form=form)
+        return render_template('AddProducts.html', form=form)
 
     return render_template('404.html')
 
@@ -52,12 +52,77 @@ def add_shop_items():
 def get_image(filename):
     return send_from_directory('../media', filename)
 
+#view added shop items and if the shop is empty it will load emptyshop.html page
 
-@admin.route('/Shop-Items', methods=['GET', 'POST'])
+@admin.route('/Shopitems', methods=['GET', 'POST'])
 @login_required
 def shop_items():
     if current_user.id == 1:
         items = product.query.order_by(product.date_added).all()
+        if len(items) == 0:
+            return render_template('emptyshop.html')
         return render_template('shopitems.html', items=items)
 
+    return render_template('404.html')
+
+#update details about the item
+
+@admin.route('/Updateproduct/<int:item_id>', methods=['GET', 'POST'])
+@login_required
+def update_items(item_id):
+    if current_user.id == 1:
+        form = shop_item_form()
+
+        product_to_update = product.query.get(item_id)
+
+        form.product_name.render_kw = {'placeholder': product_to_update.product_name}
+        form.product_price.render_kw = {'placeholder': product_to_update.product_price}
+        form.product_in_stock.render_kw = {'placeholder': product_to_update.product_in_stock}
+        form.product_picture.render_kw = {'placeholder': product_to_update.product_picture}
+        form.top_picks.render_kw = {'placeholder': product_to_update.top_picks}
+
+        if form.validate_on_submit():
+            product_name = form.product_name.data
+            product_price = form.product_price.data
+            product_in_stock = form.product_in_stock.data
+            product_picture = form.product_picture.data
+            top_picks = form.top_picks.data
+
+            file_name = secure_filename(product_picture.filename)
+
+            file_path = f'./media/{file_name}'
+
+            product_picture.save(file_path)
+
+            try:
+                product.query.filter_by(id=item_id).update(dict(
+                    product_name = product_name,
+                    product_price = product_price,
+                    product_in_stock = product_in_stock,
+                    product_picture = file_path,
+                    top_picks = top_picks
+                ))
+
+                db.session.commit()
+                flash('product details update successfully!')
+                return redirect('/Shopitems')
+            except Exception:
+                flash('Product details not updated!')
+    
+        return render_template('Updateitem.html', form = form)
+    return render_template('404.html')
+
+@admin.route('/Deleteitems/<int:item_id>', methods=['GET', 'POST'])
+@login_required
+def delete_product(item_id):
+    if current_user.id == 1:
+        try:
+            delete_shop_item = product.query.get(item_id)
+            db.session.delete(delete_shop_item)
+            db.session.commit()
+            flash('Product removed!')
+            return redirect('/Shopitems')
+        except Exception:
+            flash('Failed to remove the product')
+        return redirect('/Shopitems')
     return render_template('404.html')

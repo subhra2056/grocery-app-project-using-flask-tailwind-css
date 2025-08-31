@@ -20,19 +20,14 @@
 
   <!-- Subtitle -->
   <p class="text-gray-600 text-lg md:text-xl max-w-xl mb-8">
-    Sorry, we don’t have any products to show right now.  
-    But don’t worry — new items will be stocked soon!
+    No products added in shop yet
   </p>
 
   <!-- Call-to-Action Buttons -->
   <div class="flex flex-wrap justify-center gap-4">
-    <a href="{{ url_for('home') }}"
+    <a href="{{ url_for('admin.add_shop_items') }}"
        class="px-6 py-3 rounded-full bg-green-600 hover:bg-green-700 text-white font-medium shadow-lg transition">
-       🏠 Back to Home
-    </a>
-    <a href="{{ url_for('offers') }}"
-       class="px-6 py-3 rounded-full bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium shadow-md transition">
-       🎁 View Offers
+       Add products
     </a>
   </div>
 

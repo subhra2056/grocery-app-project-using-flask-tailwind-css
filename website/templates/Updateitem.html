@@ -71,18 +71,15 @@
 
         <!-- Best Sellers -->
         <div>
-            {{ form.best_sellers.label(class="block text-gray-700 font-medium mb-2") }}
-            {{ form.best_sellers(class="w-full rounded-xl border border-gray-300 bg-gray-50 p-3 shadow-sm
+            {{ form.top_picks.label(class="block text-gray-700 font-medium mb-2") }}
+            {{ form.top_picks(class="w-full rounded-xl border border-gray-300 bg-gray-50 p-3 shadow-sm
             focus:border-green-500 focus:ring focus:ring-green-200") }}
-            {% for error in form.best_sellers.errors %}
-            <p class="text-red-500 text-sm mt-1">{{ error }}</p>
-            {% endfor %}
+
         </div>
 
 
         <!-- Buttons -->
         <div class="flex gap-4">
-            {{ form.add_product(class="px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700") }}
             {{ form.update_product(class="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700") }}
         </div>
     </form>

@@ -29,9 +29,9 @@ class shop_item_form(FlaskForm):
     product_price = FloatField('Price', validators=[DataRequired()])
     product_in_stock = StringField('In stock', validators=[DataRequired()])
     product_picture = FileField('Product Picture', validators=[DataRequired()])
-    best_sellers = SelectField(
-        'Best Sellers',
-        choices=[('yes', 'Yes'), ('no', 'No')],
+    top_picks = SelectField(
+        'Best Products',
+        choices=[('Yes'), ('No')],
         validators=[DataRequired()]
     )
 
