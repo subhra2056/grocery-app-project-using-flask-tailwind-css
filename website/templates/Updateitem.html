@@ -69,10 +69,18 @@
             {% endfor %}
         </div>
 
-        <!-- Best Sellers -->
+        <!-- top picks -->
         <div>
             {{ form.top_picks.label(class="block text-gray-700 font-medium mb-2") }}
             {{ form.top_picks(class="w-full rounded-xl border border-gray-300 bg-gray-50 p-3 shadow-sm
+            focus:border-green-500 focus:ring focus:ring-green-200") }}
+
+        </div>
+
+        <!--Product Category-->
+         <div>
+            {{ form.product_category.label(class="block text-gray-700 font-medium mb-2") }}
+            {{ form.product_category(class="w-full rounded-xl border border-gray-300 bg-gray-50 p-3 shadow-sm
             focus:border-green-500 focus:ring focus:ring-green-200") }}
 
         </div>

@@ -19,6 +19,8 @@ def add_shop_items():
             product_in_stock = form.product_in_stock.data
             product_picture = form.product_picture.data
             top_picks = form.top_picks.data
+            #update
+            product_category = form.product_category.data
 
             file_name = secure_filename(product_picture.filename) 
 
@@ -32,6 +34,8 @@ def add_shop_items():
             new_product.product_in_stock = product_in_stock
             new_product.product_picture = file_path
             new_product.top_picks = top_picks
+            #update
+            new_product.product_category = product_category
 
             try:
                 db.session.add(new_product)
@@ -80,6 +84,8 @@ def update_items(item_id):
         form.product_in_stock.render_kw = {'placeholder': product_to_update.product_in_stock}
         form.product_picture.render_kw = {'placeholder': product_to_update.product_picture}
         form.top_picks.render_kw = {'placeholder': product_to_update.top_picks}
+        #update
+        form.product_category.render_kw = {'placeholder': product_to_update.product_category}
 
         if form.validate_on_submit():
             product_name = form.product_name.data
@@ -87,6 +93,8 @@ def update_items(item_id):
             product_in_stock = form.product_in_stock.data
             product_picture = form.product_picture.data
             top_picks = form.top_picks.data
+            #update
+            product_category = form.product_category.data
 
             file_name = secure_filename(product_picture.filename)
 
@@ -100,7 +108,9 @@ def update_items(item_id):
                     product_price = product_price,
                     product_in_stock = product_in_stock,
                     product_picture = file_path,
-                    top_picks = top_picks
+                    top_picks = top_picks,
+                    #update
+                    product_category = product_category
                 ))
 
                 db.session.commit()

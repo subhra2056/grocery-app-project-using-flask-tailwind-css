@@ -31,9 +31,28 @@ class shop_item_form(FlaskForm):
     product_picture = FileField('Product Picture', validators=[DataRequired()])
     top_picks = SelectField(
         'Best Products',
-        choices=[('Yes'), ('No')],
+        choices=[('Yes', 'Yes'), ('No', 'No')],
         validators=[DataRequired()]
     )
+    #update 
+    product_category = SelectField(
+    'Product Category',
+    choices=[
+        ('Personal Care', 'Personal Care'),
+        ('Fruits & Vegetables', 'Fruits & Vegetables'),
+        ('Electronics', 'Electronics'),
+        ('Snacks', 'Snacks'),
+        ('Beverages', 'Beverages'),
+        ('Dairy & Eggs', 'Dairy & Eggs'),
+        ('Bakery', 'Bakery'),
+        ('Household Essentials', 'Household Essentials'),
+        ('Meat & Seafood', 'Meat & Seafood'),
+        ('Stationary', 'Stationary'),
+        ('Sports & Fitness', 'Sports & Fitness')
+    ],
+    validators=[DataRequired()]
+)
+
 
     add_product = SubmitField('Add product')
     update_product = SubmitField('Update product')
