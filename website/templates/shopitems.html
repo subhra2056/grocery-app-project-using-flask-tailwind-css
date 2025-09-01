@@ -3,6 +3,13 @@
 {% block title %} Shop Items {% endblock %}
 
 {% block body %}
+
+<div class="flex justify-center mt-10">
+    <a href="/Addproducts"
+        class="px-5 py-3 bg-green-600 text-white text-sm font-medium rounded-md shadow hover:bg-blue-700 transition">
+        Add more products
+    </a>
+</div>
 <div class="max-w-7xl mx-auto px-6 py-8">
     <!--diplay empty shop page if there is no shop item-->
     <!-- {% if items | length < 1 %} {% include "emptyshop.html" %} {% else %} -->
@@ -69,10 +76,5 @@
     {% endif %}
 
 </div>
-<div class="flex justify-center mt-0">
-    <a href="/Addproducts"
-        class="px-5 py-3 bg-green-600 text-white text-sm font-medium rounded-md shadow hover:bg-blue-700 transition">
-        Add more products
-    </a>
-</div>
+
 {% endblock %}

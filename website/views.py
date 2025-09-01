@@ -5,6 +5,10 @@ from . import db
 
 views = Blueprint('views', __name__)
 
+#for payments
+API_PUBLISHABLE_KEY = 'ISPubKey_test_8654ea7d-b636-460e-85d6-884d9572f76f'
+
+API_TOKEN = 'ISSecretKey_test_9c99cac1-cea9-4e76-8ce3-b5246a30ab7d'
 
 @views.app_context_processor
 def inject_cart():
