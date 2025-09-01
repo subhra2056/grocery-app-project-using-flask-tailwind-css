@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+
+{% block title %} {{ category }} {% endblock %}
+
+{% block body %}
+<div class="max-w-7xl mx-auto px-6 py-12">
+
+    <!-- Category Hero Section -->
+    <div class="bg-gradient-to-r from-green-500 to-green-700 text-white rounded-2xl shadow-lg p-10 mb-10 text-center">
+        <h2 class="text-4xl md:text-5xl font-extrabold tracking-wide mb-4">
+            {{ category }}
+        </h2>
+        <a href="{{ url_for('views.allcategories') }}"
+           class="inline-block text-white bg-white/20 hover:bg-white/30 px-6 py-2 rounded-full font-medium transition">
+            ← Back to All Categories
+        </a>
+    </div>
+
+    {% if products|length > 0 %}
+    <!-- Product Grid -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+        {% for item in products %}
+        <div
+            class="bg-white rounded-2xl shadow-md hover:shadow-2xl overflow-hidden transition transform hover:-translate-y-1">
+
+            <!-- Product Image -->
+            <div class="relative">
+                <img src="{{ url_for('admin.get_image', filename=item.product_picture.split('/')[-1]) }}"
+                     alt="{{ item.product_name }}"
+                     class="h-48 w-full object-cover">
+                {% if item.product_in_stock > 0 %}
+                <span class="absolute top-3 left-3 bg-green-600 text-white text-xs font-semibold px-3 py-1 rounded-full">
+                    In Stock
+                </span>
+                {% else %}
+                <span class="absolute top-3 left-3 bg-red-500 text-white text-xs font-semibold px-3 py-1 rounded-full">
+                    Out of Stock
+                </span>
+                {% endif %}
+            </div>
+
+            <!-- Product Details -->
+            <div class="p-5 text-center">
+                <h3 class="font-semibold text-gray-800 text-lg truncate mb-2">
+                    {{ item.product_name }}
+                </h3>
+
+                <!-- Price -->
+                <p class="text-green-600 font-bold text-xl mb-3">
+                    ₹ {{ "%.2f"|format(item.product_price) }}
+                </p>
+
+                <!-- Add to Cart -->
+                {% if item.product_in_stock > 0 %}
+                <a href="/Add-to-cart/{{ item.id }}"
+                   class="block text-center w-full bg-gradient-to-r from-green-600 to-green-700 text-white py-2.5 rounded-xl font-medium hover:from-green-700 hover:to-green-800 transition">
+                   Add to Cart
+                </a>
+                {% else %}
+                <button class="w-full bg-gray-300 text-gray-600 py-2.5 rounded-xl font-medium cursor-not-allowed">
+                    Out of Stock
+                </button>
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    {% else %}
+    <!-- Empty State -->
+    <div class="text-center py-20">
+        <img src="https://cdn-icons-png.flaticon.com/512/2038/2038854.png" 
+             alt="Empty"
+             class="mx-auto h-32 mb-6 opacity-70">
+        <h3 class="text-2xl font-semibold text-gray-700 mb-3">
+            No products found in {{ category }}.
+        </h3>
+        <p class="text-gray-500 mb-6">
+            Check back later or explore other categories.
+        </p>
+        <a href="{{ url_for('views.allcategories') }}"
+           class="inline-block bg-gradient-to-r from-green-600 to-green-700 text-white px-6 py-3 rounded-full font-medium shadow hover:from-green-700 hover:to-green-800 transition">
+           Browse Categories
+        </a>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

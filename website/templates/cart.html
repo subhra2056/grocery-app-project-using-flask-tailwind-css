@@ -1,0 +1,112 @@
+{% extends "base.html" %}
+
+{% block title %}Cart{% endblock %}
+
+{% block body %}
+<section class="max-w-7xl mx-auto px-6 lg:px-12 py-10">
+  <h1 class="text-3xl font-bold text-gray-800 mb-8">Your Cart 🛒</h1>
+
+  {% if Cart|length == 0 %}
+  <div class="bg-gray-100 text-center py-12 rounded-lg shadow">
+    <p class="text-gray-600 text-lg">Your cart is empty.</p>
+    <a href="{{ url_for('views.home') }}"
+      class="mt-4 inline-block px-6 py-2 bg-green-600 hover:bg-green-700 text-white font-medium rounded-lg">
+      Shop Now
+    </a>
+  </div>
+  {% else %}
+  <!-- Cart Items Table -->
+  <div class="overflow-x-auto bg-white shadow-lg rounded-lg mb-8">
+    <table class="w-full text-left">
+      <thead class="bg-green-700 text-white">
+        <tr>
+          <th class="px-6 py-3">Product</th>
+          <th class="px-6 py-3">Price</th>
+          <th class="px-6 py-3">Quantity</th>
+          <th class="px-6 py-3">Subtotal</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-gray-200">
+        {% for item in Cart %}
+        <tr data-id="{{ item.id }}">
+          <!-- Product -->
+          <td class="px-6 py-4 flex items-center space-x-4">
+            <img src="{{ item.product.product_picture }}" alt="{{ item.product.product_name }}"
+              class="w-16 h-16 object-cover rounded-md">
+            <span class="font-medium text-gray-800">{{ item.product.product_name }}</span>
+          </td>
+
+          <!-- Price -->
+          <td class="px-6 py-4 text-gray-700 price">₹{{ "%.2f"|format(item.product.product_price) }}</td>
+
+          <!-- Quantity with buttons -->
+          <td class="px-6 py-4 flex items-center space-x-3">
+            <button class="qty-minus px-2 py-1 bg-gray-200 hover:bg-gray-300 rounded-md text-lg font-bold">−</button>
+            <span class="px-3 py-1 bg-gray-100 rounded-md quantity">{{ item.quantity }}</span>
+            <button class="qty-plus px-2 py-1 bg-gray-200 hover:bg-gray-300 rounded-md text-lg font-bold">+</button>
+          </td>
+
+          <!-- Subtotal -->
+          <td class="px-6 py-4 font-semibold text-gray-800 subtotal">
+            ₹{{ "%.2f"|format(item.product.product_price * item.quantity) }}
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Order Summary -->
+  <div class="max-w-md ml-auto bg-gray-50 p-6 rounded-lg shadow-lg">
+    <h2 class="text-xl font-bold mb-4">Order Summary</h2>
+    <div class="flex justify-between mb-2">
+      <span class="text-gray-600">Subtotal:</span>
+      <span class="font-medium subtotal-amount">₹{{ "%.2f"|format(total_cost) }}</span>
+    </div>
+    <div class="flex justify-between mb-2">
+      <span class="text-gray-600">Delivery Fee:</span>
+      <span class="font-medium">₹500.00</span>
+    </div>
+    <hr class="my-3">
+    <div class="flex justify-between text-lg font-bold">
+      <span>Total:</span>
+      <span class="total-amount">₹{{ "%.2f"|format(total) }}</span>
+    </div>
+
+    <a href="/checkout"
+      class="mt-6 block w-full text-center bg-green-600 hover:bg-green-700 text-white py-3 rounded-lg font-semibold">
+      Proceed to Checkout
+    </a>
+  </div>
+  {% endif %}
+</section>
+
+<!-- JS for cart actions -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$('.qty-plus, .qty-minus').click(function () {
+    let row = $(this).closest('tr');
+    let cartId = row.data('id');
+    let action = $(this).hasClass('qty-plus') ? 'plus' : 'minus';
+
+    $.ajax({
+        type: 'POST',
+        url: '/update-cart',
+        data: { cart_id: cartId, action: action },
+        success: function (data) {
+            if (data.status === 'success') {
+                row.find('.quantity').text(data.new_quantity);
+                row.find('.subtotal').text('₹' + data.subtotal.toFixed(2));
+                $('.subtotal-amount').text('₹' + data.total_cost.toFixed(2));
+                $('.total-amount').text('₹' + data.total.toFixed(2));
+
+                // If quantity reaches 0, remove row
+                if (data.new_quantity === 0) {
+                    row.remove();
+                }
+            }
+        }
+    });
+});
+</script>
+{% endblock %}
