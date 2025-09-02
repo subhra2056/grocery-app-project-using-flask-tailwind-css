@@ -38,6 +38,7 @@ class shop_item_form(FlaskForm):
     product_category = SelectField(
     'Product Category',
     choices=[
+        #('value','label')
         ('Personal Care', 'Personal Care'),
         ('Fruits & Vegetables', 'Fruits & Vegetables'),
         ('Electronics', 'Electronics'),
