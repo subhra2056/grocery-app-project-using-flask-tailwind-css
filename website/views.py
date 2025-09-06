@@ -82,41 +82,6 @@ def show_cart():
 
     return render_template('cart.html', Cart=Cart, total_cost = total_cost, total = total_cost + 500 )
 
-
-# @views.route('/update-cart', methods=['POST'])
-# @login_required
-# def update_cart():
-#     cart_id = request.form.get('cart_id')
-#     action = request.form.get('action')
-
-#     cart_item = cart.query.get(cart_id)
-
-#     if not cart_item or cart_item.customer_table_link != current_user.id:
-#         return jsonify({'status': 'error', 'message': 'Item not found'}), 404
-
-#     # Update quantity
-#     if action == 'plus':
-#         cart_item.quantity += 1
-#     elif action == 'minus':
-#         cart_item.quantity -= 1
-#         if cart_item.quantity <= 0:
-#             db.session.delete(cart_item)
-#     db.session.commit()
-
-#     # Recalculate totals
-#     Cart = cart.query.filter_by(customer_table_link=current_user.id).all()
-#     total_cost = sum(i.product.product_price * i.quantity for i in Cart)
-#     delivery_fee = 500
-#     total = total_cost + delivery_fee
-
-#     return jsonify({
-#         'status': 'success',
-#         'new_quantity': cart_item.quantity if action == 'plus' or cart_item.quantity > 0 else 0,
-#         'subtotal': cart_item.product.product_price * cart_item.quantity if cart_item.quantity > 0 else 0,
-#         'total_cost': total_cost,
-#         'total': total
-#     })
-
 @views.route('/update-cart', methods=['POST'])
 @login_required
 def update_cart():
