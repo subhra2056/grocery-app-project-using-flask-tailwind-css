@@ -113,3 +113,29 @@ def changepassword():
 @auth.route('/allcategories')
 def allcategories():
     return render_template('allcategories.html')
+
+
+#display delete account page
+@auth.route('/deleteaccountpage')
+@login_required
+def delete_account_page():
+    return render_template('deleteaccount.html', customer = current_user)
+
+#deleting account
+@auth.route('/deleteaccount/<int:user_id>', methods=['GET', 'POST'])
+@login_required
+def delete_account(user_id):
+    if current_user.id == 1:
+        flash("Admin account can't be deleted")
+    else:
+        try:
+            delete_user_account = customer.query.get(user_id)
+            db.session.delete(delete_user_account)
+            db.session.commit()
+            flash('Account deleted')
+            return redirect('/Sign-up')
+        except Exception:
+            flash('Failed to delete account!')
+        return redirect('/profile')
+    return redirect('profile')
+    
