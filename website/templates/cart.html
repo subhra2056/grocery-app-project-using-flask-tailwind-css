@@ -3,6 +3,7 @@
 {% block title %}Cart{% endblock %}
 
 {% block body %}
+
 <section class="max-w-7xl mx-auto px-6 lg:px-12 py-10">
   <h1 class="text-3xl font-bold text-gray-800 mb-8">Your Cart 🛒</h1>
 
@@ -84,29 +85,40 @@
 <!-- JS for cart actions -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-$('.qty-plus, .qty-minus').click(function () {
+  $('.qty-plus, .qty-minus').click(function () {
     let row = $(this).closest('tr');
     let cartId = row.data('id');
     let action = $(this).hasClass('qty-plus') ? 'plus' : 'minus';
 
     $.ajax({
-        type: 'POST',
-        url: '/update-cart',
-        data: { cart_id: cartId, action: action },
-        success: function (data) {
-            if (data.status === 'success') {
-                row.find('.quantity').text(data.new_quantity);
-                row.find('.subtotal').text('₹' + data.subtotal.toFixed(2));
-                $('.subtotal-amount').text('₹' + data.total_cost.toFixed(2));
-                $('.total-amount').text('₹' + data.total.toFixed(2));
+      type: 'POST',
+      url: '/update-cart',
+      data: { cart_id: cartId, action: action },
+      success: function (data) {
+        if (data.status === 'success') {
+          row.find('.quantity').text(data.new_quantity);
+          row.find('.subtotal').text('₹' + data.subtotal.toFixed(2));
+          $('.subtotal-amount').text('₹' + data.total_cost.toFixed(2));
+          $('.total-amount').text('₹' + data.total.toFixed(2));
 
-                // If quantity reaches 0, remove row
-                if (data.new_quantity === 0) {
-                    row.remove();
-                }
-            }
+          if (data.new_quantity === 0) {
+            row.remove();
+          }
+        } else if (data.status === 'error') {
+          // ✅ Show stock error in an alert (or toast if you want prettier UI)
+          let toast = $('#toast');
+          toast.text(data.message).removeClass('hidden');
+
+          setTimeout(() => {
+            toast.addClass('hidden');
+          }, 3000);
         }
+      },
+      error: function () {
+        alert('Something went wrong. Please try again.');
+      }
     });
-});
+  });
 </script>
+
 {% endblock %}
