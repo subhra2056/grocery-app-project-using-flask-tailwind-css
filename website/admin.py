@@ -42,12 +42,12 @@ def add_shop_items():
                 db.session.commit()
                 flash(f'{product_name} added to store successfully!')
                 print('Item has been added')
-                return render_template('AddProducts.html', form = form)
+                return render_template('addProducts.html', form = form)
             except Exception as e:
                 print(e)
                 flash('Item not added')
 
-        return render_template('AddProducts.html', form=form)
+        return render_template('addProducts.html', form=form)
 
     return render_template('404.html')
 
@@ -109,7 +109,6 @@ def update_items(item_id):
                     product_in_stock = product_in_stock,
                     product_picture = file_path,
                     top_picks = top_picks,
-                    #update
                     product_category = product_category
                 ))
 
@@ -119,7 +118,7 @@ def update_items(item_id):
             except Exception:
                 flash('Product details not updated!')
     
-        return render_template('Updateitem.html', form = form)
+        return render_template('updateitem.html', form = form)
     return render_template('404.html')
 
 @admin.route('/Deleteitems/<int:item_id>', methods=['GET', 'POST'])

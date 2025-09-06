@@ -35,7 +35,7 @@ def category_page(category_name):
 
     products = product.query.filter_by(product_category = category_name).all()
 
-    return render_template('display_product_categorywise.html', products = products, category = category_name)
+    return render_template('displayProductCategorywise.html', products = products, category = category_name)
 
 
 @views.route('/Add-to-cart/<int:item_id>')
